@@ -1,4 +1,4 @@
 # 需要住宅代理的服务
 
-# OpenAI
-DOMAIN-KEYWORD,reddit.com
+# reddit
+DOMAIN-SUFFIX,reddit.com
