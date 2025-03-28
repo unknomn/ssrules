@@ -22,10 +22,19 @@ DOMAIN-SUFFIX,stripe.com
 DOMAIN-SUFFIX,claude.ai
 DOMAIN-SUFFIX,anthropic.com
 
+# Grok AI
+DOMAIN-SUFFIX,grok.x.ai
+DOMAIN-SUFFIX,x.ai
+DOMAIN-SUFFIX,xai.com
+
 # Google AI
 DOMAIN-SUFFIX,bard.google.com
 DOMAIN-SUFFIX,gemini.google.com
 DOMAIN-SUFFIX,apis.google.com
+DOMAIN-SUFFIX,ai.google.dev
+DOMAIN-SUFFIX,studio.google.com
+DOMAIN-SUFFIX,aistudio.google.com
+DOMAIN-SUFFIX,generativelanguage.googleapis.com
 
 # Microsoft AI
 DOMAIN,access-point.cloudmessaging.edge.microsoft.com
@@ -39,3 +48,8 @@ DOMAIN,designer.microsoft.com
 DOMAIN,edge.microsoft.com
 DOMAIN,copilot.microsoft.com
 DOMAIN,edgeservices.bing.com
+DOMAIN-SUFFIX,ai.microsoft.com
+DOMAIN-SUFFIX,studio.microsoft.com
+DOMAIN-SUFFIX,azure.ai
+DOMAIN-SUFFIX,azureml.ms
+DOMAIN-SUFFIX,azureml.windows.net

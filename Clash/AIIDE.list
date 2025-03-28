@@ -1,0 +1,22 @@
+# AI IDE Domains
+# GitHub
+- DOMAIN-SUFFIX,github.dev
+- DOMAIN-SUFFIX,github.com
+
+# Online IDEs
+- DOMAIN-SUFFIX,gitpod.io
+- DOMAIN-SUFFIX,replit.com
+- DOMAIN-SUFFIX,cursor.sh
+- DOMAIN-SUFFIX,cursor.so
+- DOMAIN-SUFFIX,cursor.gg
+
+# AI Coding Assistants
+- DOMAIN-SUFFIX,codeium.com
+- DOMAIN-SUFFIX,tabnine.com
+- DOMAIN-SUFFIX,copilot.microsoft.com
+
+# AI Service Providers
+- DOMAIN-SUFFIX,anthropic.com
+- DOMAIN-SUFFIX,openai.com
+- DOMAIN-SUFFIX,claude.ai
+- DOMAIN-SUFFIX,perplexity.ai
