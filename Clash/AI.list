@@ -17,10 +17,6 @@ DOMAIN-SUFFIX,ai.microsoft.com
 DOMAIN-SUFFIX,studio.microsoft.com
 DOMAIN-SUFFIX,azure.ai
 
-# DeepSeek
-DOMAIN-SUFFIX,deepseek.com
-DOMAIN-SUFFIX,deepseek.ai
-
 # Perplexity
 DOMAIN-SUFFIX,perplexity.ai
 
