@@ -1,11 +1,5 @@
-# AI IDE Domains
-# GitHub
-DOMAIN-SUFFIX,github.dev
-DOMAIN-SUFFIX,github.com
-
-# Online IDEs
-DOMAIN-SUFFIX,gitpod.io
-DOMAIN-SUFFIX,replit.com
+# AI IDE & Coding Tools
+# 开发工具和 AI 编程助手
 
 # Cursor IDE
 DOMAIN-SUFFIX,cursor.com
@@ -13,13 +7,26 @@ DOMAIN-SUFFIX,cursor.sh
 DOMAIN-SUFFIX,cursor.so
 DOMAIN-SUFFIX,cursor.gg
 
-# AI Coding Assistants
+# Windsurf (Codeium)
 DOMAIN-SUFFIX,codeium.com
-DOMAIN-SUFFIX,tabnine.com
-DOMAIN-SUFFIX,copilot.microsoft.com
+DOMAIN-SUFFIX,windsurf.com
 
-# AI Service Providers
-DOMAIN-SUFFIX,anthropic.com
-DOMAIN-SUFFIX,openai.com
-DOMAIN-SUFFIX,claude.ai
-DOMAIN-SUFFIX,perplexity.ai
+# GitHub (Copilot, Codespaces, etc.)
+DOMAIN-SUFFIX,github.dev
+DOMAIN-SUFFIX,github.com
+DOMAIN-SUFFIX,copilot.github.com
+
+# Tabnine
+DOMAIN-SUFFIX,tabnine.com
+
+# Online IDEs
+DOMAIN-SUFFIX,gitpod.io
+DOMAIN-SUFFIX,replit.com
+DOMAIN-SUFFIX,codesandbox.io
+DOMAIN-SUFFIX,stackblitz.com
+
+# Augment Code
+DOMAIN-SUFFIX,augmentcode.com
+
+# Sourcegraph (Cody)
+DOMAIN-SUFFIX,sourcegraph.com

@@ -1,55 +1,46 @@
-# 需要住宅代理的 AI
+# AI Chat 补充规则
+# ACL4SSR 已覆盖: OpenAI, Claude, Gemini
+# 以下为 ACL4SSR 未覆盖的 AI 服务
 
-# OpenAI
-DOMAIN-KEYWORD,openai
-DOMAIN-SUFFIX,auth0.com
-DOMAIN-SUFFIX,challenges.cloudflare.com
-DOMAIN-SUFFIX,chatgpt.com
-DOMAIN-SUFFIX,client-api.arkoselabs.com
-DOMAIN-SUFFIX,events.statsigapi.net
-DOMAIN-SUFFIX,featuregates.org
-DOMAIN-SUFFIX,identrust.com
-DOMAIN-SUFFIX,intercom.io
-DOMAIN-SUFFIX,intercomcdn.com
-DOMAIN-SUFFIX,oaistatic.com
-DOMAIN-SUFFIX,oaiusercontent.com
-DOMAIN-SUFFIX,openai.com
-DOMAIN-SUFFIX,openaiapi-site.azureedge.net
-DOMAIN-SUFFIX,sentry.io
-DOMAIN-SUFFIX,stripe.com
-
-# Claude AI
-DOMAIN-SUFFIX,claude.ai
-DOMAIN-SUFFIX,anthropic.com
-
-# Grok AI
+# Grok AI (x.AI)
 DOMAIN-SUFFIX,grok.x.ai
 DOMAIN-SUFFIX,x.ai
 DOMAIN-SUFFIX,xai.com
 
-# Google AI
-DOMAIN-SUFFIX,bard.google.com
-DOMAIN-SUFFIX,gemini.google.com
-DOMAIN-SUFFIX,apis.google.com
-DOMAIN-SUFFIX,ai.google.dev
-DOMAIN-SUFFIX,studio.google.com
-DOMAIN-SUFFIX,aistudio.google.com
-DOMAIN-SUFFIX,generativelanguage.googleapis.com
-
-# Microsoft AI
-DOMAIN,access-point.cloudmessaging.edge.microsoft.com
-DOMAIN,sydney.bing.com
-DOMAIN,browser.pipe.aria.microsoft.com
-DOMAIN,www.bingapis.com
-DOMAIN-SUFFIX,events.data.microsoft.com
-DOMAIN-SUFFIX,prod.do.dsp.mp.microsoft.com
-DOMAIN,functional.events.data.microsoft.com
-DOMAIN,designer.microsoft.com
-DOMAIN,edge.microsoft.com
+# Microsoft AI (Copilot etc.)
 DOMAIN,copilot.microsoft.com
+DOMAIN,designer.microsoft.com
+DOMAIN,sydney.bing.com
+DOMAIN,www.bingapis.com
 DOMAIN,edgeservices.bing.com
 DOMAIN-SUFFIX,ai.microsoft.com
 DOMAIN-SUFFIX,studio.microsoft.com
 DOMAIN-SUFFIX,azure.ai
-DOMAIN-SUFFIX,azureml.ms
-DOMAIN-SUFFIX,azureml.windows.net
+
+# DeepSeek
+DOMAIN-SUFFIX,deepseek.com
+DOMAIN-SUFFIX,deepseek.ai
+
+# Perplexity
+DOMAIN-SUFFIX,perplexity.ai
+
+# Mistral
+DOMAIN-SUFFIX,mistral.ai
+DOMAIN-SUFFIX,chat.mistral.ai
+
+# Groq
+DOMAIN-SUFFIX,groq.com
+
+# Cohere
+DOMAIN-SUFFIX,cohere.com
+DOMAIN-SUFFIX,coral.cohere.com
+
+# OpenRouter (AI model aggregator)
+DOMAIN-SUFFIX,openrouter.ai
+
+# Poe (Quora AI)
+DOMAIN-SUFFIX,poe.com
+
+# Meta AI
+DOMAIN-SUFFIX,meta.ai
+DOMAIN-SUFFIX,llama.meta.com

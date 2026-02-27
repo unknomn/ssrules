@@ -1,3 +1,23 @@
-# AI Resources
+# AI Resources & Model Platforms
+# AI 模型资源和下载平台（走下载节点，需要带宽）
+
+# Hugging Face
 DOMAIN-SUFFIX,huggingface.co
+DOMAIN-SUFFIX,hf.co
+DOMAIN-SUFFIX,huggingface.tech
+
+# Civitai (AI art models)
 DOMAIN-SUFFIX,civitai.com
+
+# Replicate
+DOMAIN-SUFFIX,replicate.com
+
+# Weights & Biases
+DOMAIN-SUFFIX,wandb.ai
+
+# Kaggle
+DOMAIN-SUFFIX,kaggle.com
+
+# Ollama
+DOMAIN-SUFFIX,ollama.com
+DOMAIN-SUFFIX,ollama.ai
