@@ -28,6 +28,7 @@ proxy-groups:
     type: select
     include-all: true
     proxies:
+      - 🚀 主力线路
       - ♻️ 自动选择
       - DIRECT
 
@@ -59,6 +60,7 @@ proxy-groups:
     type: select
     include-all: true
     proxies:
+      - 🚀 主力线路
       - 🏠 住宅节点
       - 🌟 手动选择
       - DIRECT
@@ -67,8 +69,8 @@ proxy-groups:
     type: select
     include-all: true
     proxies:
-      - 📥 下载节点
-      - 🚀 主力线路
+      - � 主力线路
+      - � 下载节点
       - 🌟 手动选择
       - DIRECT
   - name: 💻 AI IDE
@@ -87,6 +89,7 @@ proxy-groups:
     type: select
     include-all: true
     proxies:
+      - 🚀 主力线路
       - 🏠 住宅节点
       - 🌟 手动选择
       - DIRECT
@@ -142,8 +145,8 @@ proxy-groups:
     icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png
     type: select
     proxies:
-      - DIRECT
       - 🚀 主力线路
+      - DIRECT
       - 🇯🇵 日本节点
       - 📥 下载节点
       - 🏠 住宅节点
@@ -161,8 +164,8 @@ proxy-groups:
     icon: https://testingcf.jsdelivr.net/gh/shindgewongxj/WHATSINStash@master/icon/bing.png
     type: select
     proxies:
-      - DIRECT
       - 🚀 主力线路
+      - DIRECT
       - 🇯🇵 日本节点
       - 📥 下载节点
       - 🏠 住宅节点
@@ -171,8 +174,8 @@ proxy-groups:
     icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/OneDrive.png
     type: select
     proxies:
-      - DIRECT
       - 🚀 主力线路
+      - DIRECT
       - 🇯🇵 日本节点
       - 📥 下载节点
       - 🏠 住宅节点
@@ -181,8 +184,8 @@ proxy-groups:
     icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Microsoft.png
     type: select
     proxies:
-      - DIRECT
       - 🚀 主力线路
+      - DIRECT
       - 🇯🇵 日本节点
       - 📥 下载节点
       - 🏠 住宅节点
@@ -191,8 +194,8 @@ proxy-groups:
     icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Apple.png
     type: select
     proxies:
-      - DIRECT
       - 🚀 主力线路
+      - DIRECT
       - 🇯🇵 日本节点
       - 📥 下载节点
       - 🏠 住宅节点
@@ -201,8 +204,8 @@ proxy-groups:
     icon: https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png
     type: select
     proxies:
-      - DIRECT
       - 🚀 主力线路
+      - DIRECT
       - 🇯🇵 日本节点
       - 📥 下载节点
       - 🏠 住宅节点
