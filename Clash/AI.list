@@ -1,30 +1,20 @@
 # AI Chat 补充规则
-# ACL4SSR 已覆盖: OpenAI, Claude, Gemini
+# ACL4SSR 已覆盖: OpenAI, Claude, Gemini, Grok(x.ai), Meta AI,
+#   Perplexity, Mistral, Copilot, Cursor, Sydney/Bing
 # 以下为 ACL4SSR 未覆盖的 AI 服务
 
-# Grok AI (x.AI)
-DOMAIN-SUFFIX,grok.x.ai
-DOMAIN-SUFFIX,x.ai
+# Grok AI (xai.com not covered by upstream x.ai)
 DOMAIN-SUFFIX,xai.com
 
-# Microsoft AI (Copilot etc.)
-DOMAIN,copilot.microsoft.com
+# Microsoft AI (extras not in upstream)
 DOMAIN,designer.microsoft.com
-DOMAIN,sydney.bing.com
 DOMAIN,www.bingapis.com
 DOMAIN,edgeservices.bing.com
 DOMAIN-SUFFIX,ai.microsoft.com
 DOMAIN-SUFFIX,studio.microsoft.com
 DOMAIN-SUFFIX,azure.ai
 
-# Perplexity
-DOMAIN-SUFFIX,perplexity.ai
-
-# Mistral
-DOMAIN-SUFFIX,mistral.ai
-DOMAIN-SUFFIX,chat.mistral.ai
-
-# Groq
+# Groq (upstream only has DOMAIN for api/console, not DOMAIN-SUFFIX)
 DOMAIN-SUFFIX,groq.com
 
 # Cohere
@@ -34,9 +24,5 @@ DOMAIN-SUFFIX,coral.cohere.com
 # OpenRouter (AI model aggregator)
 DOMAIN-SUFFIX,openrouter.ai
 
-# Poe (Quora AI)
-DOMAIN-SUFFIX,poe.com
-
-# Meta AI
-DOMAIN-SUFFIX,meta.ai
+# Meta AI (llama subdomain not in upstream)
 DOMAIN-SUFFIX,llama.meta.com

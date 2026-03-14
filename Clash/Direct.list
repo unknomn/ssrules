@@ -1,4 +1,8 @@
 # Some Custom Direct Domains
+
+# Fix: override upstream ProxyGFWlist misclassification
+DOMAIN-SUFFIX,ip138.com
+DOMAIN-SUFFIX,openwrt.org.cn
 DOMAIN-SUFFIX,mylaby.com
 DOMAIN-SUFFIX,gitr.net
 DOMAIN-SUFFIX,gitr.io
