@@ -1,0 +1,12 @@
+# Proxy patch rules
+# Supplement for ACL4SSR ProxyGFWlist missing domains
+# These are domains confirmed to require proxy but not covered upstream
+
+# Google TLD (.goog) - DOMAIN-KEYWORD,google cannot match this TLD
+DOMAIN-SUFFIX,goog
+
+# Google Cloud Run (.run.app) - not covered by google keyword
+DOMAIN-SUFFIX,run.app
+
+# Antigravity browser (Google Anti-Gravity / ID browser)
+DOMAIN-KEYWORD,antigravity

@@ -358,6 +358,12 @@ rule-providers:
     url: https://cdn.jsdelivr.net/gh/unknomn/ssrules@master/Clash/Home.list
     path: ./ruleset/ssrules/Home.yaml
     interval: 86400
+  ssrules-Proxy:
+    type: http
+    behavior: classical
+    url: https://cdn.jsdelivr.net/gh/unknomn/ssrules@master/Clash/Proxy.list
+    path: ./ruleset/ssrules/Proxy.yaml
+    interval: 86400
 
   # --- ACL4SSR ---
   LocalAreaNetwork:
@@ -602,6 +608,7 @@ rules:
   # Residential-only
   - RULE-SET,ssrules-Home,🏠 住宅限定
   # Proxy & Direct
+  - RULE-SET,ssrules-Proxy,🚀 主力线路
   - RULE-SET,ProxyGFWlist,🚀 主力线路
   - RULE-SET,ChinaDomain,🎯 全球直连
   - RULE-SET,ChinaCompanyIp,🎯 全球直连
