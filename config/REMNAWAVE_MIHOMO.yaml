@@ -75,16 +75,18 @@ proxy-groups:
     interval: 300
     tolerance: 50
 
-  # AI 出口：限定 US/JP（HK 被 OpenAI 封、MY 家宽有风控），url-test 大概率落日本（延迟最低）
+  # AI 出口：fallback 按序回退——美国(内部url-test选最快) → 日本 → 其他兜底。
+  # 不用 url-test 混测 US/JP：日本延迟必然最低会被永远选中，而用户要求美国优先
   - name: ⚡ AI 专线
-    type: url-test
+    type: fallback
     remnawave:
       include-proxies: false
-    include-all: true
-    filter: "(?i)(🇺🇸|US|美国|🇯🇵|JP|日本)"
+    proxies:
+      - 🛟 美国优选
+      - 🇯🇵 日本节点
+      - ♻️ 自动选择
     url: https://www.gstatic.com/generate_204
     interval: 300
-    tolerance: 50
 
   - name: ♻️ 自动选择
     type: url-test
@@ -123,14 +125,13 @@ proxy-groups:
     proxies:
       - 🇺🇸 美国节点
 
+  # 纯日本节点池（不能混入 主力线路 之类的组引用：AI 专线 fallback 引用本组，混入会循环引用）
   - name: 🇯🇵 日本节点
     type: select
     remnawave:
       include-proxies: false
     include-all: true
     filter: "(?i)(日本|jp|japan|东京|大阪)"
-    proxies:
-      - 🚀 主力线路
 
   # ── 场景/策略分组：只保留策略引用（include-proxies:false）──
   - name: 🤖 AI
