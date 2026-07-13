@@ -51,120 +51,99 @@ dns:
 proxies: # LEAVE THIS LINE!
 
 proxy-groups:
-  # ── 节点池：由 Remnawave 自动注入全部节点（新增节点自动进池）──
-  - name: 🚀 主力线路
+  # ═══════════════════════════════════════════════════════════════════════
+  # 策略层：唯一需要人工表达"意见"的地方
+  #   · 默认区域优先级 → 调整各策略组 proxies 顺序（第一项 = 默认出口）
+  #   · AI 可用区      → 调整 🤖 AI 的 fallback 链
+  # 下方区域层/场景层是 filter 驱动、自维护：新增节点只要命名含国别标识即自动归位，
+  # 不需要改本模板。
+  # ═══════════════════════════════════════════════════════════════════════
+
+  - name: 🚀 主力线路            # 全局默认出口（未被规则分流的流量都走这里）
     type: select
-    proxies:
-      - 🛟 美国优选
-      - ♻️ 自动选择
-      - 🏠 住宅节点
-      - 🇺🇸 美国节点
-      - 🌟 手动选择
-      - DIRECT
-    # Remnawave 追加全部节点名于其后
-
-  # 默认出口：url-test 限定美国节点。全节点测速会永远选中延迟最低的 HK（15ms vs US 155ms），
-  # 而 HK 撞 AI 封锁/流媒体区域问题，故默认第一项限定 US
-  - name: 🛟 美国优选
-    type: url-test
-    remnawave:
-      include-proxies: false
-    include-all: true
-    filter: "(?i)(🇺🇸|US|美国)"
-    url: https://www.gstatic.com/generate_204
-    interval: 300
-    tolerance: 50
-
-  # AI 出口：fallback 按序回退——美国(内部url-test选最快) → 日本 → 其他兜底。
-  # 不用 url-test 混测 US/JP：日本延迟必然最低会被永远选中，而用户要求美国优先
-  - name: ⚡ AI 专线
-    type: fallback
     remnawave:
       include-proxies: false
     proxies:
-      - 🛟 美国优选
+      - 🇺🇸 美国节点             # 默认：美国（组内 url-test 自动选最快的美国节点）
       - 🇯🇵 日本节点
-      - ♻️ 自动选择
+      - 🇭🇰 香港节点
+      - 🏠 住宅节点
+      - 🌟 手动选择
+      - DIRECT
+
+  - name: 🤖 AI                 # 国别优先 US>JP；HK 被封锁、住宅慢且地域不一致 → 不入链
+    type: fallback              # 按序回退：美国活着就用美国(组内选最快)，全挂才退日本
+    remnawave:
+      include-proxies: false
+    proxies:
+      - 🇺🇸 美国节点
+      - 🇯🇵 日本节点
     url: https://www.gstatic.com/generate_204
     interval: 300
 
-  - name: ♻️ 自动选择
+  - name: 🏠 住宅限定            # 质量优先：reddit 等做住宅识别的站点走住宅，掉线退美国
+    type: select
+    remnawave:
+      include-proxies: false
+    proxies:
+      - 🏠 住宅节点
+      - 🇺🇸 美国节点
+      - 🌟 手动选择
+
+  # ── 区域层：filter 自动归类 + url-test 组内选最快（锁区域，区内自愈选优）──
+  - name: 🇺🇸 美国节点
     type: url-test
+    remnawave:
+      include-proxies: false
+    include-all: true
+    filter: "(?i)(🇺🇸|美国|US ·)"
     url: https://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
-    # Remnawave 注入全部节点名
 
-  - name: 🌟 手动选择
-    type: select
-    # Remnawave 注入全部节点名
-
-  # ── 属性分组：Remnawave 不注入，交给 mihomo include-all+filter 按名字自动归类 ──
-  # 组名叫「住宅节点」而非「家宽住宅」：本机 Clash Verge 全局 Merge.yaml 的 prepend 规则引用该名，
-  # 组名不一致会导致 mihomo 拒载整份配置
-  - name: 🏠 住宅节点
-    type: select
-    remnawave:
-      include-proxies: false
-    include-all: true
-    filter: "(?i)(家宽|住宅|residential|home)"
-
-  - name: 🇺🇸 美国节点
-    type: select
-    remnawave:
-      include-proxies: false
-    include-all: true
-    filter: "(?i)(🇺🇸|美国|cn2|gia|united)"
-
-  - name: 🎥 奈飞节点
-    type: select
-    remnawave:
-      include-proxies: false
-    include-all: true
-    filter: "(?i)(奈飞|netflix|nf|media|解锁|unlock)"
-    proxies:
-      - 🇺🇸 美国节点
-
-  # 纯日本节点池（不能混入 主力线路 之类的组引用：AI 专线 fallback 引用本组，混入会循环引用）
   - name: 🇯🇵 日本节点
-    type: select
+    type: url-test
     remnawave:
       include-proxies: false
     include-all: true
-    filter: "(?i)(日本|jp|japan|东京|大阪)"
+    filter: "(?i)(🇯🇵|日本|JP ·)"
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
 
-  # ── 场景/策略分组：只保留策略引用（include-proxies:false）──
-  - name: 🤖 AI
-    type: select
+  - name: 🇭🇰 香港节点
+    type: url-test
     remnawave:
       include-proxies: false
-    proxies:
-      - ⚡ AI 专线
-      - 🚀 主力线路
-      - 🇺🇸 美国节点
-      - 🏠 住宅节点
-      - 🌟 手动选择
-      - DIRECT
+    include-all: true
+    filter: "(?i)(🇭🇰|香港|HK ·)"
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
 
-  # 需要住宅 IP 的服务（reddit 等风控站）
-  - name: 🏠 住宅限定
-    type: select
+  - name: 🏠 住宅节点            # 住宅出口池（zmh01 直连+经HK中转，同一 MY 出口 IP，url-test 选快路径）
+    type: url-test
     remnawave:
       include-proxies: false
-    proxies:
-      - 🏠 住宅节点
-      - 🚀 主力线路
-      - 🌟 手动选择
-      - DIRECT
+    include-all: true
+    filter: "(?i)(家宽|住宅|residential)"
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
 
+  - name: 🌟 手动选择            # 全节点手动池（需要钉死某台具体节点时用）
+    type: select
+    # Remnawave 注入全部节点名
+
+  # ── 场景层：按用途引用区域/策略组（静态引用，换节点无需改）──
   - name: 📲 电报消息
     type: select
     remnawave:
       include-proxies: false
     proxies:
       - 🚀 主力线路
-      - ♻️ 自动选择
       - 🇺🇸 美国节点
+      - 🇯🇵 日本节点
       - 🌟 手动选择
       - DIRECT
 
@@ -174,7 +153,6 @@ proxy-groups:
       include-proxies: false
     proxies:
       - 🚀 主力线路
-      - ♻️ 自动选择
       - 🇺🇸 美国节点
       - 🇯🇵 日本节点
       - 🌟 手动选择
@@ -185,10 +163,9 @@ proxy-groups:
     remnawave:
       include-proxies: false
     proxies:
-      - 🎥 奈飞节点
-      - 🚀 主力线路
       - 🇺🇸 美国节点
       - 🇯🇵 日本节点
+      - 🚀 主力线路
       - 🌟 手动选择
 
   - name: 🌍 国外媒体
@@ -197,7 +174,6 @@ proxy-groups:
       include-proxies: false
     proxies:
       - 🚀 主力线路
-      - ♻️ 自动选择
       - 🇺🇸 美国节点
       - 🇯🇵 日本节点
       - 🌟 手动选择
@@ -251,9 +227,9 @@ proxy-groups:
       include-proxies: false
     proxies:
       - 🚀 主力线路
-      - ♻️ 自动选择
-      - 🎯 全球直连
+      - 🇺🇸 美国节点
       - 🌟 手动选择
+      - DIRECT
 
 rule-providers:
   private:
@@ -415,4 +391,5 @@ rules:
   - RULE-SET,cnip,🎯 全球直连,no-resolve
   - RULE-SET,geolocation-not-cn,🚀 主力线路
   - MATCH,🐟 漏网之鱼
+
 
