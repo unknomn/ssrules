@@ -1,0 +1,417 @@
+# Remnawave MIHOMO subscription template (panel: n.qitt.in, template uuid c9f284c6-ef9c-4743-b34e-bfd1f74a2bce)
+# Source of truth is the panel DB; this file is the version-controlled copy.
+# Apply via panel UI (Templates -> MIHOMO) or PATCH /api/subscription-templates.
+
+mixed-port: 7890
+allow-lan: true
+mode: rule
+log-level: warning
+ipv6: false
+unified-delay: true
+tcp-concurrent: true
+find-process-mode: 'off'
+global-client-fingerprint: chrome
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - "*.lan"
+    - "*.local"
+    - "+.sigy.me"
+    - "+.qitt.in"
+    - rule-set:cn
+    - time.*.com
+    - ntp.*.com
+    - "+.pool.ntp.org"
+    - "*.msftconnecttest.com"
+    - "*.msftncsi.com"
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  proxy-server-nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+  nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+  nameserver-policy:
+    "rule-set:cn":
+      - https://doh.pub/dns-query
+      - https://dns.alidns.com/dns-query
+    "rule-set:geolocation-not-cn":
+      - https://1.1.1.1/dns-query
+      - https://8.8.8.8/dns-query
+
+proxies: # LEAVE THIS LINE!
+
+proxy-groups:
+  # ── 节点池：由 Remnawave 自动注入全部节点（新增节点自动进池）──
+  - name: 🚀 主力线路
+    type: select
+    proxies:
+      - 🛟 美国优选
+      - ♻️ 自动选择
+      - 🏠 住宅节点
+      - 🇺🇸 美国节点
+      - 🌟 手动选择
+      - DIRECT
+    # Remnawave 追加全部节点名于其后
+
+  # 默认出口：url-test 限定美国节点。全节点测速会永远选中延迟最低的 HK（15ms vs US 155ms），
+  # 而 HK 撞 AI 封锁/流媒体区域问题，故默认第一项限定 US
+  - name: 🛟 美国优选
+    type: url-test
+    remnawave:
+      include-proxies: false
+    include-all: true
+    filter: "(?i)(🇺🇸|US|美国)"
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+
+  # AI 出口：限定 US/JP（HK 被 OpenAI 封、MY 家宽有风控），url-test 大概率落日本（延迟最低）
+  - name: ⚡ AI 专线
+    type: url-test
+    remnawave:
+      include-proxies: false
+    include-all: true
+    filter: "(?i)(🇺🇸|US|美国|🇯🇵|JP|日本)"
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+
+  - name: ♻️ 自动选择
+    type: url-test
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+    # Remnawave 注入全部节点名
+
+  - name: 🌟 手动选择
+    type: select
+    # Remnawave 注入全部节点名
+
+  # ── 属性分组：Remnawave 不注入，交给 mihomo include-all+filter 按名字自动归类 ──
+  # 组名叫「住宅节点」而非「家宽住宅」：本机 Clash Verge 全局 Merge.yaml 的 prepend 规则引用该名，
+  # 组名不一致会导致 mihomo 拒载整份配置
+  - name: 🏠 住宅节点
+    type: select
+    remnawave:
+      include-proxies: false
+    include-all: true
+    filter: "(?i)(家宽|住宅|residential|home)"
+
+  - name: 🇺🇸 美国节点
+    type: select
+    remnawave:
+      include-proxies: false
+    include-all: true
+    filter: "(?i)(🇺🇸|美国|cn2|gia|united)"
+
+  - name: 🎥 奈飞节点
+    type: select
+    remnawave:
+      include-proxies: false
+    include-all: true
+    filter: "(?i)(奈飞|netflix|nf|media|解锁|unlock)"
+    proxies:
+      - 🇺🇸 美国节点
+
+  - name: 🇯🇵 日本节点
+    type: select
+    remnawave:
+      include-proxies: false
+    include-all: true
+    filter: "(?i)(日本|jp|japan|东京|大阪)"
+    proxies:
+      - 🚀 主力线路
+
+  # ── 场景/策略分组：只保留策略引用（include-proxies:false）──
+  - name: 🤖 AI
+    type: select
+    remnawave:
+      include-proxies: false
+    proxies:
+      - ⚡ AI 专线
+      - 🚀 主力线路
+      - 🇺🇸 美国节点
+      - 🏠 住宅节点
+      - 🌟 手动选择
+      - DIRECT
+
+  # 需要住宅 IP 的服务（reddit 等风控站）
+  - name: 🏠 住宅限定
+    type: select
+    remnawave:
+      include-proxies: false
+    proxies:
+      - 🏠 住宅节点
+      - 🚀 主力线路
+      - 🌟 手动选择
+      - DIRECT
+
+  - name: 📲 电报消息
+    type: select
+    remnawave:
+      include-proxies: false
+    proxies:
+      - 🚀 主力线路
+      - ♻️ 自动选择
+      - 🇺🇸 美国节点
+      - 🌟 手动选择
+      - DIRECT
+
+  - name: 📹 油管视频
+    type: select
+    remnawave:
+      include-proxies: false
+    proxies:
+      - 🚀 主力线路
+      - ♻️ 自动选择
+      - 🇺🇸 美国节点
+      - 🇯🇵 日本节点
+      - 🌟 手动选择
+      - DIRECT
+
+  - name: 🎥 奈飞视频
+    type: select
+    remnawave:
+      include-proxies: false
+    proxies:
+      - 🎥 奈飞节点
+      - 🚀 主力线路
+      - 🇺🇸 美国节点
+      - 🇯🇵 日本节点
+      - 🌟 手动选择
+
+  - name: 🌍 国外媒体
+    type: select
+    remnawave:
+      include-proxies: false
+    proxies:
+      - 🚀 主力线路
+      - ♻️ 自动选择
+      - 🇺🇸 美国节点
+      - 🇯🇵 日本节点
+      - 🌟 手动选择
+      - DIRECT
+
+  - name: Ⓜ️ 微软服务
+    type: select
+    remnawave:
+      include-proxies: false
+    proxies:
+      - DIRECT
+      - 🚀 主力线路
+      - 🌟 手动选择
+
+  - name: 🍎 苹果服务
+    type: select
+    remnawave:
+      include-proxies: false
+    proxies:
+      - DIRECT
+      - 🚀 主力线路
+      - 🌟 手动选择
+
+  - name: 📺 哔哩哔哩
+    type: select
+    remnawave:
+      include-proxies: false
+    proxies:
+      - DIRECT
+      - 🚀 主力线路
+
+  - name: 🎯 全球直连
+    type: select
+    remnawave:
+      include-proxies: false
+    proxies:
+      - DIRECT
+      - 🚀 主力线路
+
+  - name: 🛑 广告拦截
+    type: select
+    remnawave:
+      include-proxies: false
+    proxies:
+      - REJECT
+      - DIRECT
+
+  - name: 🐟 漏网之鱼
+    type: select
+    remnawave:
+      include-proxies: false
+    proxies:
+      - 🚀 主力线路
+      - ♻️ 自动选择
+      - 🎯 全球直连
+      - 🌟 手动选择
+
+rule-providers:
+  private:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/private.mrs
+    path: ./ruleset/private.mrs
+  ads:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ads-all.mrs
+    path: ./ruleset/ads.mrs
+  ai:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-ai-!cn.mrs
+    path: ./ruleset/ai.mrs
+  telegram:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/telegram.mrs
+    path: ./ruleset/telegram.mrs
+  telegram-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/telegram.mrs
+    path: ./ruleset/telegram-ip.mrs
+  youtube:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/youtube.mrs
+    path: ./ruleset/youtube.mrs
+  google:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/google.mrs
+    path: ./ruleset/google.mrs
+  netflix:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/netflix.mrs
+    path: ./ruleset/netflix.mrs
+  netflix-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/netflix.mrs
+    path: ./ruleset/netflix-ip.mrs
+  disney:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/disney.mrs
+    path: ./ruleset/disney.mrs
+  spotify:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/spotify.mrs
+    path: ./ruleset/spotify.mrs
+  github:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/github.mrs
+    path: ./ruleset/github.mrs
+  microsoft:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/microsoft.mrs
+    path: ./ruleset/microsoft.mrs
+  apple:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/apple.mrs
+    path: ./ruleset/apple.mrs
+  bilibili:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/bilibili.mrs
+    path: ./ruleset/bilibili.mrs
+  geolocation-not-cn:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/geolocation-!cn.mrs
+    path: ./ruleset/geolocation-not-cn.mrs
+  cn:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/cn.mrs
+    path: ./ruleset/cn.mrs
+  cnip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/cn.mrs
+    path: ./ruleset/cnip.mrs
+
+rules:
+  - RULE-SET,private,🎯 全球直连
+  - RULE-SET,ads,🛑 广告拦截
+  # 住宅限定：datacenter IP 易被风控的站点
+  - DOMAIN-SUFFIX,reddit.com,🏠 住宅限定
+  - DOMAIN-SUFFIX,redd.it,🏠 住宅限定
+  - DOMAIN-SUFFIX,redditstatic.com,🏠 住宅限定
+  - DOMAIN-SUFFIX,redditmedia.com,🏠 住宅限定
+  # AI IDE / Coding 工具（MetaCubeX category-ai 未覆盖的）
+  - DOMAIN-SUFFIX,cursor.com,🤖 AI
+  - DOMAIN-SUFFIX,cursor.sh,🤖 AI
+  - DOMAIN-SUFFIX,codeium.com,🤖 AI
+  - DOMAIN-SUFFIX,windsurf.com,🤖 AI
+  - DOMAIN-SUFFIX,augmentcode.com,🤖 AI
+  - DOMAIN-SUFFIX,githubcopilot.com,🤖 AI
+  - RULE-SET,ai,🤖 AI
+  - RULE-SET,telegram,📲 电报消息
+  - RULE-SET,telegram-ip,📲 电报消息,no-resolve
+  - RULE-SET,youtube,📹 油管视频
+  - RULE-SET,netflix,🎥 奈飞视频
+  - RULE-SET,netflix-ip,🎥 奈飞视频,no-resolve
+  - RULE-SET,disney,🌍 国外媒体
+  - RULE-SET,spotify,🌍 国外媒体
+  - RULE-SET,bilibili,📺 哔哩哔哩
+  - RULE-SET,github,🚀 主力线路
+  - RULE-SET,google,🚀 主力线路
+  - RULE-SET,microsoft,Ⓜ️ 微软服务
+  - RULE-SET,apple,🍎 苹果服务
+  - RULE-SET,cn,🎯 全球直连
+  - RULE-SET,cnip,🎯 全球直连,no-resolve
+  - RULE-SET,geolocation-not-cn,🚀 主力线路
+  - MATCH,🐟 漏网之鱼
+
