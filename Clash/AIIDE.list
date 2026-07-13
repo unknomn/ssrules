@@ -15,6 +15,9 @@ DOMAIN-SUFFIX,windsurf.com
 DOMAIN-SUFFIX,github.dev
 DOMAIN-SUFFIX,github.com
 DOMAIN-SUFFIX,copilot.github.com
+# Copilot API (actual endpoints: api.githubcopilot.com etc.)
+DOMAIN-SUFFIX,githubcopilot.com
+DOMAIN,copilot-proxy.githubusercontent.com
 
 # Tabnine
 DOMAIN-SUFFIX,tabnine.com
