@@ -179,6 +179,14 @@ proxy-groups:
       - 🌟 手动选择
       - DIRECT
 
+  - name: 🎌 日本媒体            # 日本地域限定（DMM/niconico/ABEMA/TVer/radiko）→ 必须日本 IP
+    type: select
+    remnawave:
+      include-proxies: false
+    proxies:
+      - 🇯🇵 日本节点
+      - 🌟 手动选择
+
   - name: Ⓜ️ 微软服务
     type: select
     remnawave:
@@ -337,6 +345,41 @@ rule-providers:
     interval: 86400
     url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/bilibili.mrs
     path: ./ruleset/bilibili.mrs
+  dmm:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/dmm.mrs
+    path: ./ruleset/dmm.mrs
+  niconico:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/niconico.mrs
+    path: ./ruleset/niconico.mrs
+  abema:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/abema.mrs
+    path: ./ruleset/abema.mrs
+  tver:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/tver.mrs
+    path: ./ruleset/tver.mrs
+  radiko:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/radiko.mrs
+    path: ./ruleset/radiko.mrs
   geolocation-not-cn:
     type: http
     behavior: domain
@@ -375,6 +418,12 @@ rules:
   - DOMAIN-SUFFIX,augmentcode.com,🤖 AI
   - DOMAIN-SUFFIX,githubcopilot.com,🤖 AI
   - RULE-SET,ai,🤖 AI
+  # 日本媒体（地域限定 → 日本节点 IP）
+  - RULE-SET,dmm,🎌 日本媒体
+  - RULE-SET,niconico,🎌 日本媒体
+  - RULE-SET,abema,🎌 日本媒体
+  - RULE-SET,tver,🎌 日本媒体
+  - RULE-SET,radiko,🎌 日本媒体
   - RULE-SET,telegram,📲 电报消息
   - RULE-SET,telegram-ip,📲 电报消息,no-resolve
   - RULE-SET,youtube,📹 油管视频
