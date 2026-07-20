@@ -52,16 +52,17 @@ proxies: # LEAVE THIS LINE!
 
 proxy-groups:
   # ═══════════════════════════════════════════════════════════════════════
-  # 分层设计（2026-07-20）：
-  #   · 区域组：include-all + filter 按节点名自动归类，url-test 组内选最快
-  #     —— 新增节点只要命名含国别标识即自动归位，不需要改本模板
-  #   · 场景组：select 全菜单（所有区域组 + 自动/手动/DIRECT 都可选），
-  #     第一项 = 默认值，客户端里可随时改选（store-selected 持久化）
-  #   · 不写死区域：默认链最终落在 ♻️ 自动选择（全节点），
+  # 通用规范（2026-07-20）：不针对当前节点/国家设计，按固定规范布局
+  #   · 区域层 = 固定常用地区集（美/日/港/台/新/韩），不随当前节点增减；
+  #     filter 按命名规范自动归类，url-test 组内选最快；无节点的区域组为空，仅作可选项
+  #   · 场景组 = 变量型引用：主力线路(默认) + 自动选择 + 手动选择 + 具体节点(include-all)
+  #     + DIRECT，不逐个枚举国家；第一项 = 默认值，客户端改选由 store-selected 持久化
+  #   · 国家特殊性只保留在场景固有处（日本媒体→日本节点、哔哩→港台、住宅限定→住宅节点）
+  #   · 区域细分只出现在 主力线路 一层；默认链最终落在 ♻️ 自动选择（全节点），
   #     订阅里只剩单个任意地区节点时依然全部可用
   # ═══════════════════════════════════════════════════════════════════════
 
-  - name: 🚀 主力线路            # 全局默认出口（未被规则分流的流量都走这里）
+  - name: 🚀 主力线路            # 全局默认出口（未被规则分流的流量都走这里）；区域细分只在这一层
     type: select
     remnawave:
       include-proxies: false
@@ -70,7 +71,9 @@ proxy-groups:
       - 🇺🇸 美国节点
       - 🇯🇵 日本节点
       - 🇭🇰 香港节点
-      - 🇲🇾 大马节点
+      - 🇹🇼 台湾节点
+      - 🇸🇬 狮城节点
+      - 🇰🇷 韩国节点
       - 🏠 住宅节点
       - 🌟 手动选择
       - DIRECT
@@ -84,18 +87,13 @@ proxy-groups:
     interval: 300
     tolerance: 50
 
-  - name: 🤖 AI                 # 默认主力线路；想钉某个区域在菜单里选即可
+  - name: 🤖 AI                 # 默认主力线路；要钉区域在主力线路层选，要钉节点直接选下方具体节点
     type: select
     remnawave:
       include-proxies: false
     include-all: true
     proxies:
       - 🚀 主力线路
-      - 🇺🇸 美国节点
-      - 🇯🇵 日本节点
-      - 🇭🇰 香港节点
-      - 🇲🇾 大马节点
-      - 🏠 住宅节点
       - ♻️ 自动选择
       - 🌟 手动选择
       - DIRECT
@@ -108,21 +106,18 @@ proxy-groups:
     proxies:
       - 🏠 住宅节点
       - 🚀 主力线路
-      - 🇺🇸 美国节点
-      - 🇯🇵 日本节点
-      - 🇭🇰 香港节点
-      - 🇲🇾 大马节点
       - ♻️ 自动选择
       - 🌟 手动选择
       - DIRECT
 
-  # ── 区域层：filter 自动归类 + url-test 组内选最快（锁区域，区内自愈选优）──
+  # ── 区域层：固定常用地区集（不随当前节点增减）；filter 按命名规范自动归类，
+  #    url-test 组内选最快（锁区域，区内自愈选优）──
   - name: 🇺🇸 美国节点
     type: url-test
     remnawave:
       include-proxies: false
     include-all: true
-    filter: "(?i)(🇺🇸|美国|US ·)"
+    filter: "(?i)(🇺🇸|美国|United States|US ·)"
     url: https://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
@@ -132,7 +127,7 @@ proxy-groups:
     remnawave:
       include-proxies: false
     include-all: true
-    filter: "(?i)(🇯🇵|日本|JP ·)"
+    filter: "(?i)(🇯🇵|日本|东京|大阪|Japan|JP ·)"
     url: https://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
@@ -142,17 +137,37 @@ proxy-groups:
     remnawave:
       include-proxies: false
     include-all: true
-    filter: "(?i)(🇭🇰|香港|HK ·)"
+    filter: "(?i)(🇭🇰|香港|Hong ?Kong|HK ·)"
     url: https://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
 
-  - name: 🇲🇾 大马节点
+  - name: 🇹🇼 台湾节点
     type: url-test
     remnawave:
       include-proxies: false
     include-all: true
-    filter: "(?i)(🇲🇾|马来|大马|MY ·)"
+    filter: "(?i)(🇹🇼|台湾|台北|Taiwan|TW ·)"
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+
+  - name: 🇸🇬 狮城节点
+    type: url-test
+    remnawave:
+      include-proxies: false
+    include-all: true
+    filter: "(?i)(🇸🇬|新加坡|狮城|Singapore|SG ·)"
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+
+  - name: 🇰🇷 韩国节点
+    type: url-test
+    remnawave:
+      include-proxies: false
+    include-all: true
+    filter: "(?i)(🇰🇷|韩国|首尔|Korea|KR ·)"
     url: https://www.gstatic.com/generate_204
     interval: 300
     tolerance: 50
@@ -171,7 +186,7 @@ proxy-groups:
     type: select
     # Remnawave 注入全部节点名
 
-  # ── 场景层：select 全菜单，第一项 = 默认（静态引用，换节点无需改）──
+  # ── 场景层：变量型引用（主力/自动/手动 + include-all 具体节点），第一项 = 默认 ──
   - name: 📲 电报消息
     type: select
     remnawave:
@@ -180,11 +195,6 @@ proxy-groups:
     proxies:
       - 🚀 主力线路
       - ♻️ 自动选择
-      - 🇺🇸 美国节点
-      - 🇯🇵 日本节点
-      - 🇭🇰 香港节点
-      - 🇲🇾 大马节点
-      - 🏠 住宅节点
       - 🌟 手动选择
       - DIRECT
 
@@ -196,11 +206,6 @@ proxy-groups:
     proxies:
       - 🚀 主力线路
       - ♻️ 自动选择
-      - 🇺🇸 美国节点
-      - 🇯🇵 日本节点
-      - 🇭🇰 香港节点
-      - 🇲🇾 大马节点
-      - 🏠 住宅节点
       - 🌟 手动选择
       - DIRECT
 
@@ -211,11 +216,6 @@ proxy-groups:
     include-all: true
     proxies:
       - 🚀 主力线路
-      - 🇺🇸 美国节点
-      - 🇯🇵 日本节点
-      - 🇭🇰 香港节点
-      - 🇲🇾 大马节点
-      - 🏠 住宅节点
       - ♻️ 自动选择
       - 🌟 手动选择
       - DIRECT
@@ -228,15 +228,10 @@ proxy-groups:
     proxies:
       - 🚀 主力线路
       - ♻️ 自动选择
-      - 🇺🇸 美国节点
-      - 🇯🇵 日本节点
-      - 🇭🇰 香港节点
-      - 🇲🇾 大马节点
-      - 🏠 住宅节点
       - 🌟 手动选择
       - DIRECT
 
-  - name: 🎌 日本媒体            # 日本地域限定（DMM/niconico/ABEMA/TVer/radiko）默认日本节点
+  - name: 🎌 日本媒体            # 日本地域限定（DMM/niconico/ABEMA/TVer/radiko）→ 场景固有：默认日本节点
     type: select
     remnawave:
       include-proxies: false
@@ -244,10 +239,6 @@ proxy-groups:
     proxies:
       - 🇯🇵 日本节点
       - 🚀 主力线路
-      - 🇺🇸 美国节点
-      - 🇭🇰 香港节点
-      - 🇲🇾 大马节点
-      - 🏠 住宅节点
       - ♻️ 自动选择
       - 🌟 手动选择
       - DIRECT
@@ -260,10 +251,6 @@ proxy-groups:
       - DIRECT
       - 🚀 主力线路
       - ♻️ 自动选择
-      - 🇺🇸 美国节点
-      - 🇯🇵 日本节点
-      - 🇭🇰 香港节点
-      - 🇲🇾 大马节点
       - 🌟 手动选择
 
   - name: 🍎 苹果服务
@@ -274,19 +261,17 @@ proxy-groups:
       - DIRECT
       - 🚀 主力线路
       - ♻️ 自动选择
-      - 🇺🇸 美国节点
-      - 🇯🇵 日本节点
-      - 🇭🇰 香港节点
-      - 🇲🇾 大马节点
       - 🌟 手动选择
 
-  - name: 📺 哔哩哔哩
+  - name: 📺 哔哩哔哩            # 港澳台限定内容 → 场景固有：可切港/台
     type: select
     remnawave:
       include-proxies: false
     proxies:
       - DIRECT
       - 🚀 主力线路
+      - 🇭🇰 香港节点
+      - 🇹🇼 台湾节点
 
   - name: 🎯 全球直连
     type: select
@@ -312,11 +297,6 @@ proxy-groups:
     proxies:
       - 🚀 主力线路
       - ♻️ 自动选择
-      - 🇺🇸 美国节点
-      - 🇯🇵 日本节点
-      - 🇭🇰 香港节点
-      - 🇲🇾 大马节点
-      - 🏠 住宅节点
       - 🌟 手动选择
       - DIRECT
 
