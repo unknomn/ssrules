@@ -9,8 +9,8 @@ log-level: warning
 ipv6: false
 unified-delay: true
 tcp-concurrent: true
-find-process-mode: 'off'
-global-client-fingerprint: chrome
+# 不设 find-process-mode：面板重序列化会去掉引号，`off` 被 YAML 1.1 解析器（OpenClash 的 Ruby）当成 false → mihomo 报 invalid find process mode；留空走默认 strict。
+# 不设 global-client-fingerprint：新版 mihomo 已移除该键（启动即报 error），节点由面板逐个注入 client-fingerprint。
 profile:
   store-selected: true
   store-fake-ip: true
