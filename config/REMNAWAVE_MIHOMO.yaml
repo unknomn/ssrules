@@ -44,9 +44,9 @@ dns:
     "rule-set:cn":
       - https://doh.pub/dns-query
       - https://dns.alidns.com/dns-query
-    "rule-set:geolocation-not-cn":
-      - https://1.1.1.1/dns-query
-      - https://8.8.8.8/dns-query
+    "rule-set:geolocation-not-cn":       # 国外 DoH 必须经代理：直连 1.1.1.1/8.8.8.8:443 在国内超时；桌面 fake-ip 感知不到，路由器 redir-host 会整段国外解析失败
+      - "https://1.1.1.1/dns-query#♻️ 自动选择"
+      - "https://8.8.8.8/dns-query#♻️ 自动选择"
 
 proxies: # LEAVE THIS LINE!
 
