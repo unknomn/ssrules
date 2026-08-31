@@ -23,3 +23,12 @@ DOMAIN-SUFFIX,authany.com
 DOMAIN-SUFFIX,teway.net
 DOMAIN-SUFFIX,telink.cc
 DOMAIN-SUFFIX,meshead.com
+
+# Own infra domains (Cloudflare-hosted) - always direct
+DOMAIN-SUFFIX,sigy.me
+DOMAIN-SUFFIX,tanmai.net
+DOMAIN-SUFFIX,dududan.com
+
+# Own HK node IPs (DMIT HKG: dk01/tea, dk02/milk) - always direct
+IP-CIDR,103.135.249.78/32,no-resolve
+IP-CIDR,103.135.251.92/32,no-resolve

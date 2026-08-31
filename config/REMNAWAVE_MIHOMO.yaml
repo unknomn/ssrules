@@ -25,6 +25,7 @@ dns:
     - "*.local"
     - "+.sigy.me"
     - "+.qitt.in"
+    - "+.telett.com"
     - rule-set:cn
     - time.*.com
     - ntp.*.com
@@ -306,6 +307,14 @@ proxy-groups:
       - DIRECT
 
 rule-providers:
+  # Own custom direct list (unknomn/ssrules): own CF domains + own HK node IPs
+  ssrules-direct:
+    type: http
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/unknomn/ssrules@master/Clash/Direct.list
+    path: ./ruleset/ssrules-direct.list
   private:
     type: http
     behavior: domain
@@ -470,6 +479,7 @@ rule-providers:
 
 rules:
   - RULE-SET,private,🎯 全球直连
+  - RULE-SET,ssrules-direct,🎯 全球直连
   - RULE-SET,ads,🛑 广告拦截
   # 住宅限定：datacenter IP 易被风控的站点
   - DOMAIN-SUFFIX,reddit.com,🏠 住宅限定
