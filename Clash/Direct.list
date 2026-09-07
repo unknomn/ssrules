@@ -1,34 +1,67 @@
 # Some Custom Direct Domains
 
-# Fix: override upstream ProxyGFWlist misclassification
+# Fix: override upstream ProxyGFWlist misclassification (not our domains)
 DOMAIN-SUFFIX,ip138.com
 DOMAIN-SUFFIX,openwrt.org.cn
-DOMAIN-SUFFIX,mylaby.com
-DOMAIN-SUFFIX,gitr.net
-DOMAIN-SUFFIX,gitr.io
-DOMAIN-SUFFIX,deepi.net
-DOMAIN-SUFFIX,flowpod.net
+
+# Own domains on our Cloudflare account - always direct.
+# Complete zone list as of 2026-09-07 (47 zones). Re-check against the Cloudflare
+# API when a domain is added or removed; every one of these points at our own machines
+# (DMIT HK/JP/LA, RackNerd, Aliyun CN) or has no records yet.
+DOMAIN-SUFFIX,agentalk.co
+DOMAIN-SUFFIX,agentxp.io
 DOMAIN-SUFFIX,agifuse.com
-DOMAIN-SUFFIX,qitt.in
-DOMAIN-SUFFIX,qitt.xyz
-DOMAIN-SUFFIX,telett.com
-DOMAIN-SUFFIX,telebin.net
-DOMAIN-SUFFIX,taok.in
-DOMAIN-SUFFIX,taok.io
-DOMAIN-SUFFIX,loopbit.net
-DOMAIN-SUFFIX,loopbit.xyz
-DOMAIN-SUFFIX,inferly.io
-DOMAIN-SUFFIX,tunfly.com
 DOMAIN-SUFFIX,authany.com
 DOMAIN-SUFFIX,authanyid.com
-DOMAIN-SUFFIX,teway.net
-DOMAIN-SUFFIX,telink.cc
-DOMAIN-SUFFIX,meshead.com
-
-# Own infra domains (Cloudflare-hosted) - always direct
-DOMAIN-SUFFIX,sigy.me
-DOMAIN-SUFFIX,tanmai.net
+DOMAIN-SUFFIX,capkii.com
+DOMAIN-SUFFIX,clawmast.com
+DOMAIN-SUFFIX,cowpenai.com
+DOMAIN-SUFFIX,deepi.net
+DOMAIN-SUFFIX,dolink.io
 DOMAIN-SUFFIX,dududan.com
+DOMAIN-SUFFIX,gitr.io
+DOMAIN-SUFFIX,gitr.net
+DOMAIN-SUFFIX,goldlyai.com
+DOMAIN-SUFFIX,inferdeck.com
+DOMAIN-SUFFIX,inferly.app
+DOMAIN-SUFFIX,inferly.io
+DOMAIN-SUFFIX,kowpen.com
+DOMAIN-SUFFIX,lispenai.com
+DOMAIN-SUFFIX,loopbit.net
+DOMAIN-SUFFIX,looport.com
+DOMAIN-SUFFIX,mantragate.com
+DOMAIN-SUFFIX,meshead.com
+DOMAIN-SUFFIX,mindoai.com
+DOMAIN-SUFFIX,modelfork.com
+DOMAIN-SUFFIX,mrreal.net
+DOMAIN-SUFFIX,mrwish.co
+DOMAIN-SUFFIX,mrwish.shop
+DOMAIN-SUFFIX,mylaby.com
+DOMAIN-SUFFIX,ojobrowser.com
+DOMAIN-SUFFIX,opcmodels.com
+DOMAIN-SUFFIX,orip.io
+DOMAIN-SUFFIX,qitt.in
+DOMAIN-SUFFIX,relayflux.com
+DOMAIN-SUFFIX,routstack.com
+DOMAIN-SUFFIX,serendip.live
+DOMAIN-SUFFIX,sigy.me
+DOMAIN-SUFFIX,sigyai.com
+DOMAIN-SUFFIX,tanmai.net
+DOMAIN-SUFFIX,taok.in
+DOMAIN-SUFFIX,telett.com
+DOMAIN-SUFFIX,telink.cc
+DOMAIN-SUFFIX,teway.net
+DOMAIN-SUFFIX,tunfly.com
+DOMAIN-SUFFIX,voideep.com
+DOMAIN-SUFFIX,weftwiselab.com
+DOMAIN-SUFFIX,yousaid.co
+
+# Own domains registered elsewhere (not on that Cloudflare account)
+DOMAIN-SUFFIX,flowpod.net
+DOMAIN-SUFFIX,loopbit.xyz
+DOMAIN-SUFFIX,qitt.xyz
+DOMAIN-SUFFIX,taok.io
+DOMAIN-SUFFIX,telebin.net
 
 # Own HK node IPs (DMIT HKG: dk01/tea, dk02/milk) - always direct
 IP-CIDR,103.135.249.78/32,no-resolve
