@@ -480,6 +480,9 @@ rule-providers:
 rules:
   - RULE-SET,private,🎯 全球直连
   - RULE-SET,ssrules-direct,🎯 全球直连
+  # 广告库误伤白名单（必须排在 ads 前）：千川/巨量前端 JS/CSS 全托管在 lf*-ad-platform.byteadverts.com，
+  # category-ads-all 收录了 +.byteadverts.com，不放行则千川整页打不开（2026-09-22）
+  - DOMAIN-SUFFIX,byteadverts.com,🎯 全球直连
   - RULE-SET,ads,🛑 广告拦截
   # 住宅限定：datacenter IP 易被风控的站点
   - DOMAIN-SUFFIX,reddit.com,🏠 住宅限定
@@ -512,6 +515,8 @@ rules:
   - RULE-SET,google,🚀 主力线路
   - RULE-SET,microsoft,Ⓜ️ 微软服务
   - RULE-SET,apple,🍎 苹果服务
+  # snssdk.com 不在 geosite:cn，否则落漏网之鱼出境；字节验证码/监控在这。排在 ads 后，保留其广告子域拦截（2026-09-22）
+  - DOMAIN-SUFFIX,snssdk.com,🎯 全球直连
   - RULE-SET,cn,🎯 全球直连
   - RULE-SET,cnip,🎯 全球直连,no-resolve
   - RULE-SET,geolocation-not-cn,🚀 主力线路
