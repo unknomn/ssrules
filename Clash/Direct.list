@@ -4,6 +4,11 @@
 DOMAIN-SUFFIX,ip138.com
 DOMAIN-SUFFIX,openwrt.org.cn
 
+# Fix: override upstream ad-list false positive (not our domains). Must sit before the ads rule-set.
+# v2fly/MetaCubeX category-ads-all tags +.byteadverts.com, but Qianchuan / Ocean Engine serve their
+# whole frontend from lf*-ad-platform.byteadverts.com, so blocking it blanks those sites (2026-09-22).
+DOMAIN-SUFFIX,byteadverts.com
+
 # Own domains on our Cloudflare account - always direct.
 # Complete zone list as of 2026-09-07 (47 zones). Re-check against the Cloudflare
 # API when a domain is added or removed; every one of these points at our own machines
