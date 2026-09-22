@@ -462,6 +462,20 @@ rule-providers:
     interval: 86400
     url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/geolocation-!cn.mrs
     path: ./ruleset/geolocation-not-cn.mrs
+  bytedance-notcn:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/bytedance@!cn.mrs
+    path: ./ruleset/bytedance-notcn.mrs
+  bytedance:
+    type: http
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/bytedance.mrs
+    path: ./ruleset/bytedance.mrs
   cn:
     type: http
     behavior: domain
@@ -480,8 +494,8 @@ rule-providers:
 rules:
   - RULE-SET,private,🎯 全球直连
   - RULE-SET,ssrules-direct,🎯 全球直连
-  # 广告库误伤白名单（必须排在 ads 前）：千川/巨量前端 JS/CSS 全托管在 lf*-ad-platform.byteadverts.com，
-  # category-ads-all 收录了 +.byteadverts.com，不放行则千川整页打不开（2026-09-22）
+  # 临时兜底：byteadverts.com 已迁入 ssrules Direct.list（上一行 ssrules-direct 覆盖）。
+  # 客户端的 Direct.list 缓存最长 24h（interval 86400），2026-09-23 之后删除本行（2026-09-22）
   - DOMAIN-SUFFIX,byteadverts.com,🎯 全球直连
   - RULE-SET,ads,🛑 广告拦截
   # 住宅限定：datacenter IP 易被风控的站点
@@ -515,8 +529,10 @@ rules:
   - RULE-SET,google,🚀 主力线路
   - RULE-SET,microsoft,Ⓜ️ 微软服务
   - RULE-SET,apple,🍎 苹果服务
-  # snssdk.com 不在 geosite:cn，否则落漏网之鱼出境；字节验证码/监控在这。排在 ads 后，保留其广告子域拦截（2026-09-22）
-  - DOMAIN-SUFFIX,snssdk.com,🎯 全球直连
+  # 字节系：MetaCubeX 的 geosite:cn 取自 blackmatrix7 ChinaMax，漏了 snssdk.com 等 55 个国内字节域名（会落漏网之鱼出境）；
+  # 用 v2fly 维护的 bytedance 补齐。先放海外业务（TikTok/CapCut/Coze 等 @!cn）走代理，再放其余直连；排在 ads 后，广告子域照拦（2026-09-22）
+  - RULE-SET,bytedance-notcn,🚀 主力线路
+  - RULE-SET,bytedance,🎯 全球直连
   - RULE-SET,cn,🎯 全球直连
   - RULE-SET,cnip,🎯 全球直连,no-resolve
   - RULE-SET,geolocation-not-cn,🚀 主力线路
