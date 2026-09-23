@@ -494,9 +494,6 @@ rule-providers:
 rules:
   - RULE-SET,private,🎯 全球直连
   - RULE-SET,ssrules-direct,🎯 全球直连
-  # 临时兜底：byteadverts.com 已迁入 ssrules Direct.list（上一行 ssrules-direct 覆盖）。
-  # 客户端的 Direct.list 缓存最长 24h（interval 86400），2026-09-23 之后删除本行（2026-09-22）
-  - DOMAIN-SUFFIX,byteadverts.com,🎯 全球直连
   - RULE-SET,ads,🛑 广告拦截
   # 住宅限定：datacenter IP 易被风控的站点
   - DOMAIN-SUFFIX,reddit.com,🏠 住宅限定
