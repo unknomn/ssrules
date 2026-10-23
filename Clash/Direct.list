@@ -89,3 +89,12 @@ PROCESS-NAME,Jump Desktop
 PROCESS-NAME,Jump Desktop.exe
 PROCESS-NAME,JumpDesktop.exe
 PROCESS-NAME,com.p5sys.android.jumpdesktop
+
+# Tailscale / Headscale WireGuard underlay - always direct. Under TUN mode its UDP to peer endpoints otherwise
+# falls through to the proxy, NAT hole-punching fails and every peer is stuck on DERP (2026-10-23: tmac->davidmini 300ms via DERP).
+PROCESS-NAME,io.tailscale.ipn.macsys.network-extension
+PROCESS-NAME,IPNExtension
+PROCESS-NAME,tailscaled
+PROCESS-NAME,tailscaled.exe
+PROCESS-NAME,tailscale-ipn.exe
+PROCESS-NAME,com.tailscale.ipn
