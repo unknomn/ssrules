@@ -68,6 +68,24 @@ DOMAIN-SUFFIX,qitt.xyz
 DOMAIN-SUFFIX,taok.io
 DOMAIN-SUFFIX,telebin.net
 
-# Own HK node IPs (DMIT HKG: dk01/tea, dk02/milk) - always direct
+# Own proxy node IPs - always direct (they are our own machines; tunnelling to them through another node only adds a hop).
+# Source of truth: Remnawave panel GET /api/nodes (address). Re-sync when a node is added / removed / changes IP (2026-10-23, 11 nodes).
 IP-CIDR,103.135.249.78/32,no-resolve
 IP-CIDR,103.135.251.92/32,no-resolve
+IP-CIDR,154.12.191.239/32,no-resolve
+IP-CIDR,179.255.137.248/32,no-resolve
+IP-CIDR,154.17.12.214/32,no-resolve
+IP-CIDR,69.63.209.6/32,no-resolve
+IP-CIDR,154.21.94.246/32,no-resolve
+IP-CIDR,89.208.254.233/32,no-resolve
+IP-CIDR,107.174.176.103/32,no-resolve
+IP-CIDR,218.208.109.12/32,no-resolve
+IP-CIDR,94.194.46.205/32,no-resolve
+
+# Remote desktop clients - always direct. They do their own P2P/relay; routing them through a proxy node
+# makes the session detour (e.g. Jump Fluid to a Tokyo host went via LA, 140ms) and wraps UDP in TCP.
+# PROCESS-NAME only matches on desktop/mobile clients (TUN / system proxy); routers have no process info.
+PROCESS-NAME,Jump Desktop
+PROCESS-NAME,Jump Desktop.exe
+PROCESS-NAME,JumpDesktop.exe
+PROCESS-NAME,com.p5sys.android.jumpdesktop
