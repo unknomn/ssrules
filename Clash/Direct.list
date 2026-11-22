@@ -100,3 +100,22 @@ PROCESS-NAME,tailscaled
 PROCESS-NAME,tailscaled.exe
 PROCESS-NAME,tailscale-ipn.exe
 PROCESS-NAME,com.tailscale.ipn
+
+# Domestic chat / office apps - always direct. They connect to raw IPs (no domain); any IP missing from cnip falls
+# through to 🐟 漏网之鱼 -> foreign node, and Tencent login risk control rejects it. 2026-11-22: gugupod WeChat could
+# not log in under rule mode, fine under direct mode. Helpers are separate processes ("WeChatAppEx Helper (Renderer)",
+# "QQ Helper", "QQEXDOC") so the regexes cover the whole family; .exe for Windows, package names for Android.
+PROCESS-NAME-REGEX,^(WeChat|Weixin|WeChatAppEx|WeChatHelper)( Helper.*)?(\.exe)?$
+PROCESS-NAME-REGEX,^(QQ|QQEX[A-Za-z]+)( Helper.*)?(\.exe)?$
+PROCESS-NAME-REGEX,^(WXWork|企业微信)( Helper.*)?(\.exe)?$
+PROCESS-NAME-REGEX,^(BaiduNetdisk(_mac)?|netdisk_service|baidunetdiskhost)( Helper.*)?(\.exe)?$
+PROCESS-NAME,wpsoffice
+PROCESS-NAME,wps.exe
+PROCESS-NAME,com.tencent.mm
+PROCESS-NAME,com.tencent.mobileqq
+PROCESS-NAME,com.tencent.wework
+
+# FaceTime - always direct. Media is UDP to Apple relays / the peer; through a Reality node the UDP gets wrapped in TCP.
+PROCESS-NAME,FaceTime
+PROCESS-NAME,avconferenced
+PROCESS-NAME,com.apple.FaceTime.FTConversationService
