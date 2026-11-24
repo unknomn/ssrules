@@ -119,13 +119,3 @@ PROCESS-NAME,com.tencent.wework
 PROCESS-NAME,FaceTime
 PROCESS-NAME,avconferenced
 PROCESS-NAME,com.apple.FaceTime.FTConversationService
-
-# PikPak cloud drive - default direct. 2026-11-24 tested from Aliyun South China without proxy: DNS unpolluted,
-# TLS/SNI not blocked, auth captcha API issues tokens (servers: Tencent Cloud Singapore, ~70ms). Domains from
-# v2fly domain-list-community data/pikpak. If downloads turn out slow on home broadband, move these to Proxy.list.
-DOMAIN-SUFFIX,mypikpak.com
-DOMAIN-SUFFIX,mypikpak.net
-DOMAIN-SUFFIX,pikpak.me
-DOMAIN-SUFFIX,pikpak.io
-DOMAIN-SUFFIX,pikpakdrive.com
-DOMAIN-SUFFIX,pickpackapp.com
