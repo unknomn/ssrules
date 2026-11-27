@@ -42,6 +42,9 @@ DOMAIN-SUFFIX,mrreal.net
 DOMAIN-SUFFIX,mrwish.co
 DOMAIN-SUFFIX,mrwish.shop
 DOMAIN-SUFFIX,mylaby.com
+# NetBird mesh (2026-11-27): peers resolve as *.oddlink.cc (internal-only), control plane + relays on oddlink.net
+DOMAIN-SUFFIX,oddlink.cc
+DOMAIN-SUFFIX,oddlink.net
 DOMAIN-SUFFIX,ojobrowser.com
 DOMAIN-SUFFIX,opcmodels.com
 DOMAIN-SUFFIX,orip.io
