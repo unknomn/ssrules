@@ -9,10 +9,13 @@ DOMAIN-SUFFIX,openwrt.org.cn
 # whole frontend from lf*-ad-platform.byteadverts.com, so blocking it blanks those sites (2026-09-22).
 DOMAIN-SUFFIX,byteadverts.com
 
+# Note for the block below: keep it comment-free; direct-rules.sh ends a section at the first unknown comment line.
+# oddlink.cc is the NetBird peer suffix (internal-only names); oddlink.net is its control plane + relays.
 # Own domains on our Cloudflare account - always direct.
-# Complete zone list as of 2026-09-07 (47 zones). Re-check against the Cloudflare
+# Complete zone list as of 2026-11-28 (62 zones). Re-check against the Cloudflare
 # API when a domain is added or removed; every one of these points at our own machines
 # (DMIT HK/JP/LA, RackNerd, Aliyun CN) or has no records yet.
+DOMAIN-SUFFIX,acorn.team
 DOMAIN-SUFFIX,agentalk.co
 DOMAIN-SUFFIX,agentxp.io
 DOMAIN-SUFFIX,agifuse.com
@@ -24,27 +27,36 @@ DOMAIN-SUFFIX,cowpenai.com
 DOMAIN-SUFFIX,deepi.net
 DOMAIN-SUFFIX,dolink.io
 DOMAIN-SUFFIX,dududan.com
+DOMAIN-SUFFIX,flowsteed.com
 DOMAIN-SUFFIX,gitr.io
 DOMAIN-SUFFIX,gitr.net
 DOMAIN-SUFFIX,goldlyai.com
 DOMAIN-SUFFIX,inferdeck.com
 DOMAIN-SUFFIX,inferly.app
 DOMAIN-SUFFIX,inferly.io
+DOMAIN-SUFFIX,inkmoai.com
 DOMAIN-SUFFIX,kowpen.com
 DOMAIN-SUFFIX,lispenai.com
 DOMAIN-SUFFIX,loopbit.net
 DOMAIN-SUFFIX,looport.com
 DOMAIN-SUFFIX,mantragate.com
+DOMAIN-SUFFIX,meetmrwish.com
 DOMAIN-SUFFIX,meshead.com
 DOMAIN-SUFFIX,mindoai.com
 DOMAIN-SUFFIX,modelfork.com
+DOMAIN-SUFFIX,modeltaps.com
 DOMAIN-SUFFIX,mrreal.net
 DOMAIN-SUFFIX,mrwish.co
 DOMAIN-SUFFIX,mrwish.shop
+DOMAIN-SUFFIX,mrwishco.com
+DOMAIN-SUFFIX,mulus.ai
+DOMAIN-SUFFIX,mulus.app
+DOMAIN-SUFFIX,mulus.work
+DOMAIN-SUFFIX,mulusai.com
 DOMAIN-SUFFIX,mylaby.com
-# NetBird mesh (2026-11-27): peers resolve as *.oddlink.cc (internal-only), control plane + relays on oddlink.net
 DOMAIN-SUFFIX,oddlink.cc
 DOMAIN-SUFFIX,oddlink.net
+DOMAIN-SUFFIX,oddpeek.com
 DOMAIN-SUFFIX,ojobrowser.com
 DOMAIN-SUFFIX,opcmodels.com
 DOMAIN-SUFFIX,orip.io
@@ -54,6 +66,8 @@ DOMAIN-SUFFIX,routstack.com
 DOMAIN-SUFFIX,serendip.live
 DOMAIN-SUFFIX,sigy.me
 DOMAIN-SUFFIX,sigyai.com
+DOMAIN-SUFFIX,softsay.ai
+DOMAIN-SUFFIX,softsayai.com
 DOMAIN-SUFFIX,tanmai.net
 DOMAIN-SUFFIX,taok.in
 DOMAIN-SUFFIX,telett.com
@@ -103,6 +117,13 @@ PROCESS-NAME,tailscaled
 PROCESS-NAME,tailscaled.exe
 PROCESS-NAME,tailscale-ipn.exe
 PROCESS-NAME,com.tailscale.ipn
+
+# NetBird WireGuard underlay - always direct, same reason as Tailscale above: under TUN its UDP to peers would fall
+# through to a proxy node and break hole punching (peers stuck on relay). macOS/Linux daemon "netbird" runs userspace
+# WireGuard, so it owns the UDP sockets; .exe for Windows, package name for Android.
+PROCESS-NAME,netbird
+PROCESS-NAME,netbird.exe
+PROCESS-NAME,io.netbird.client
 
 # Domestic chat / office apps - always direct. They connect to raw IPs (no domain); any IP missing from cnip falls
 # through to 🐟 漏网之鱼 -> foreign node, and Tencent login risk control rejects it. 2026-11-22: gugupod WeChat could
